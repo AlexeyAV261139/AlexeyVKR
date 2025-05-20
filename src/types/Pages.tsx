@@ -5,5 +5,8 @@ export enum Pages {
   VacationRequestManager,
   MyVacationRequestsPage,
   RoomStat,
-  Profile
+  Profile,
+  Translation,
+  SetTranslation,
+  CreateRoom
 }

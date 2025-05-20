@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode, use } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  use,
+} from "react";
 
 // Типы
 export interface Employee {
@@ -65,19 +71,22 @@ interface AppContextType {
   currentUser: AuthUser | null;
   login: (email: string, password: string) => void;
   logout: () => void;
+  streamCode: string | null;
+  setStreamCode: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [streamCode, setStreamCode] = useState<string | null>("jfKfPfyJRdk");
 
   const login = (email: string, password: string) => {
     const user = employees.find(
       (e) => e.email === email && e.password === password
     );
     if (user) {
-      user.isActive = true
+      user.isActive = true;
       setCurrentUser(user);
     } else {
       alert("Неверный логин или пароль");
@@ -85,11 +94,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    const user = employees.find(
-      (e) => e.id === currentUser?.id);
+    const user = employees.find((e) => e.id === currentUser?.id);
     user!.isActive = false;
     setCurrentUser(null);
-  }
+  };
 
   // 🔸 Мок-данные
   const [employees, setEmployees] = useState<Employee[]>([
@@ -128,7 +136,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       isActive: false,
       role: Role.Admin,
       password: "1",
-    },    
+    },
   ]);
 
   const [meetingRooms, setMeetingRooms] = useState<MeetingRoom[]>([
@@ -311,6 +319,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         currentUser,
         login,
         logout,
+        streamCode,
+        setStreamCode,
       }}
     >
       {children}

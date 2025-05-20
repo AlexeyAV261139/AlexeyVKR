@@ -2,6 +2,7 @@ import { useState } from "react";
 import MeetingRoomModal from "../MeetingRoomModal";
 import MeetingRoomCard from "../MeetingRoomCard";
 import { MeetingRoom, useAppContext } from "../../Context/AppContext";
+import MyBookings from "../MyBookings";
 
 export default function MeetingRoomsPage() {
   const { meetingRooms } = useAppContext();
@@ -17,6 +18,7 @@ export default function MeetingRoomsPage() {
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
+      <MyBookings/>
       <h1 className="text-3xl font-bold mb-6 px-4">Переговорные комнаты</h1>
 
       <div className="flex flex-wrap items-center gap-4 px-4 mb-6">

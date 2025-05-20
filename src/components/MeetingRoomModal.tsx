@@ -35,6 +35,16 @@ export default function MeetingRoomModal({
       return;
     }
 
+    const isSameDay =
+      start.getFullYear() === end.getFullYear() &&
+      start.getMonth() === end.getMonth() &&
+      start.getDate() === end.getDate();
+
+    if (!isSameDay) {
+      alert("Дата начала и окончания должны быть в один и тот же день.");
+      return;
+    }
+    
     // Проверка: пересечения с другими бронированиями
     const hasOverlap = room.bookings.some((booking) => {
       const existingStart = new Date(booking.startTime);

@@ -8,6 +8,9 @@ import VacationRequestManager from "../VacationRequestManager";
 import MyVacationRequestsPage from "./MyVacationRequestsPage";
 import RoomUsageReport from "../RoomUsageReport";
 import ProfilePanel from "./ProfilePanel";
+import YouTubePlayer from "../YouTubePlayer";
+import StreamCodeSetter from "../StreamCodeSetter";
+import CreateMeetingRoomForm from "./CreateMeetingRoomForm";
 
 export default function MainPage() {
   const [activePage, setActivePage] = useState<Pages>(Pages.Rooms);
@@ -18,10 +21,22 @@ export default function MainPage() {
       {activePage === Pages.Rooms && <MeetingRoomsPage />}
       {activePage === Pages.Employee && <EmployeeListPage />}
       {activePage === Pages.VacationRequestForm && <VacationRequestForm />}
-      {activePage === Pages.VacationRequestManager && <VacationRequestManager />}
-      {activePage === Pages.MyVacationRequestsPage && <MyVacationRequestsPage />}
+      {activePage === Pages.VacationRequestManager && (
+        <VacationRequestManager />
+      )}
+      {activePage === Pages.MyVacationRequestsPage && (
+        <MyVacationRequestsPage />
+      )}
       {activePage === Pages.RoomStat && <RoomUsageReport />}
       {activePage === Pages.Profile && <ProfilePanel />}
+      {activePage === Pages.Translation && (
+        <YouTubePlayer
+          title="Презентация проекта"
+          description="Это видео демонстрирует основные возможности нашей системы бронирования."
+        />
+      )}
+      {activePage === Pages.CreateRoom && <CreateMeetingRoomForm />}
+      {activePage === Pages.SetTranslation && <StreamCodeSetter />}
     </>
   );
 }
