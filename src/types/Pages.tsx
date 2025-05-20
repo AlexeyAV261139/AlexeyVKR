@@ -8,5 +8,6 @@ export enum Pages {
   Profile,
   Translation,
   SetTranslation,
-  CreateRoom
+  CreateRoom,
+  MyBookings
 }

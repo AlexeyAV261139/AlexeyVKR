@@ -11,6 +11,7 @@ import ProfilePanel from "./ProfilePanel";
 import YouTubePlayer from "../YouTubePlayer";
 import StreamCodeSetter from "../StreamCodeSetter";
 import CreateMeetingRoomForm from "./CreateMeetingRoomForm";
+import MyBookings from "../MyBookings";
 
 export default function MainPage() {
   const [activePage, setActivePage] = useState<Pages>(Pages.Rooms);
@@ -37,6 +38,7 @@ export default function MainPage() {
       )}
       {activePage === Pages.CreateRoom && <CreateMeetingRoomForm />}
       {activePage === Pages.SetTranslation && <StreamCodeSetter />}
+      {activePage === Pages.MyBookings && <MyBookings />}
     </>
   );
 }

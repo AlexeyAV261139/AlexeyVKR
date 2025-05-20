@@ -14,6 +14,8 @@ const MegaMenu: React.FC<SidebarHiddenProps> = ({
 }) => {
   const [isFirstOpen, setisFirstOpen] = useState(false);
   const [isSecondOpen, setisSecondOpen] = useState(false);
+  const [isThirdOpen, setisThirdOpen] = useState(false);
+
 
   const handleMenuClick = (page: Pages) => {
     setActivePage(page);
@@ -73,16 +75,89 @@ const MegaMenu: React.FC<SidebarHiddenProps> = ({
             id="mega-menu-icons"
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           >
-            <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
+            <ul className="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">              
               <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                  aria-current="page"
-                  onClick={() => handleMenuClick(Pages.Rooms)}
+                <button
+                  id="mega-menu-icons-dropdown-button"
+                  data-dropdown-toggle="mega-menu-icons-dropdown"
+                  className="flex items-center justify-between w-full py-2 px-3 font-medium text-gray-900 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                  onClick={() => setisThirdOpen((prev) => !prev)}
                 >
                   Переговорные
-                </a>
+                  <svg
+                    className="w-2.5 h-2.5 ms-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="mega-menu-icons-dropdown"
+                  className={`absolute z-10 grid w-auto grid-cols-2 text-sm bg-white border border-gray-100 rounded-lg shadow-md dark:border-gray-700 md:grid-cols-3 dark:bg-gray-700 ${
+                    isThirdOpen ? "" : "hidden"
+                  }`}
+                >
+                  <div className="p-4 pb-0 text-gray-900 md:pb-4 dark:text-white">
+                    <ul
+                      className="space-y-4"
+                      aria-labelledby="mega-menu-icons-dropdown-button"
+                    >
+                      <li>
+                        <a
+                          href="#"
+                          className="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group"
+                          onClick={() =>
+                            handleMenuClick(Pages.Rooms)
+                          }
+                        >
+                          <span className="sr-only"></span>
+                          <svg
+                            className="w-3 h-3 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                          </svg>
+                          Список переговорных
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 group"
+                          onClick={() =>
+                            handleMenuClick(Pages.MyBookings)
+                          }
+                        >
+                          <span className="sr-only">Library</span>
+                          <svg
+                            className="w-3 h-3 me-2 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="m1.56 6.245 8 3.924a1 1 0 0 0 .88 0l8-3.924a1 1 0 0 0 0-1.8l-8-3.925a1 1 0 0 0-.88 0l-8 3.925a1 1 0 0 0 0 1.8Z" />
+                            <path d="M18 8.376a1 1 0 0 0-1 1v.163l-7 3.434-7-3.434v-.163a1 1 0 0 0-2 0v.786a1 1 0 0 0 .56.9l8 3.925a1 1 0 0 0 .88 0l8-3.925a1 1 0 0 0 .56-.9v-.786a1 1 0 0 0-1-1Z" />
+                            <path d="M17.993 13.191a1 1 0 0 0-1 1v.163l-7 3.435-7-3.435v-.163a1 1 0 1 0-2 0v.787a1 1 0 0 0 .56.9l8 3.925a1 1 0 0 0 .88 0l8-3.925a1 1 0 0 0 .56-.9v-.787a1 1 0 0 0-1-1Z" />
+                          </svg>
+                          Мои бронирования
+                        </a>
+                      </li>                      
+                    </ul>
+                  </div>
+                </div>
               </li>
               <li>
                 <button

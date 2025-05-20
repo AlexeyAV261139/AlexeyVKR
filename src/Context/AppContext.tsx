@@ -130,7 +130,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       fullName: "Админ",
       position: "Администратор",
       department: "",
-      email: "AdminVasilev@mail.ru",
+      email: "1@mail.ru",
       phone: "+7 922 670-45-12",
       hireDate: "",
       isActive: false,
