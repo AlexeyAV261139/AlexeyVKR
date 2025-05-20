@@ -7,6 +7,7 @@ import VacationRequestForm from "../VacationRequestForm";
 import VacationRequestManager from "../VacationRequestManager";
 import MyVacationRequestsPage from "./MyVacationRequestsPage";
 import RoomUsageReport from "../RoomUsageReport";
+import ProfilePanel from "./ProfilePanel";
 
 export default function MainPage() {
   const [activePage, setActivePage] = useState<Pages>(Pages.Rooms);
@@ -20,7 +21,7 @@ export default function MainPage() {
       {activePage === Pages.VacationRequestManager && <VacationRequestManager />}
       {activePage === Pages.MyVacationRequestsPage && <MyVacationRequestsPage />}
       {activePage === Pages.RoomStat && <RoomUsageReport />}
-
+      {activePage === Pages.Profile && <ProfilePanel />}
     </>
   );
 }

@@ -128,19 +128,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       isActive: false,
       role: Role.Admin,
       password: "1",
-    },
-     {
-      id: 4,
-      fullName: "Админ 2",
-      position: "Администратор",
-      department: "",
-      email: "1",
-      phone: "+7 922 670-45-12",
-      hireDate: "",
-      isActive: false,
-      role: Role.Admin,
-      password: "1",
-    },
+    },    
   ]);
 
   const [meetingRooms, setMeetingRooms] = useState<MeetingRoom[]>([
