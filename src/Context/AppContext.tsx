@@ -8,6 +8,7 @@ import React, {
 
 // Типы
 export interface Employee {
+  confirmed: boolean;
   id: number;
   fullName: string;
   position: string;
@@ -37,6 +38,7 @@ export interface Booking {
   startTime: string;
   endTime: string;
   purpose: string;
+  participantIds: number[];
 }
 
 export interface VacationRequest {
@@ -103,15 +105,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [employees, setEmployees] = useState<Employee[]>([
     {
       id: 1,
-      fullName: "Иван Иванов",
+      fullName: "Алексей Соколов",
       position: "Разработчик",
       department: "ИТ",
-      email: "IvanIvanov@mail.ru",
+      email: "alexey261139@mail.ru",
       phone: "+7 922 670-45-10",
       hireDate: "2015-11-21T14:00:00",
       isActive: false,
       role: Role.Base,
       password: "1",
+      confirmed: false
     },
     {
       id: 2,
@@ -124,6 +127,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       isActive: false,
       role: Role.Base,
       password: "1",
+      confirmed: false
     },
     {
       id: 3,
@@ -136,6 +140,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       isActive: false,
       role: Role.Admin,
       password: "1",
+      confirmed: false
     },
   ]);
 
@@ -155,6 +160,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-20T10:00:00",
           endTime: "2025-05-20T11:00:00",
           purpose: "Совещание по проекту",
+          participantIds: [1, 2, 3]
         },
         {
           id: 4,
@@ -163,6 +169,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-20T15:00:00",
           endTime: "2025-05-20T16:00:00",
           purpose: "Презентация",
+          participantIds: [2]
         },
       ],
     },
@@ -181,6 +188,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-20T09:00:00",
           endTime: "2025-05-20T10:30:00",
           purpose: "Встреча с клиентом",
+          participantIds: []
         },
         {
           id: 6,
@@ -189,6 +197,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-21T14:00:00",
           endTime: "2025-05-21T15:00:00",
           purpose: "Интервью",
+          participantIds: []
         },
       ],
     },
@@ -207,6 +216,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-20T12:00:00",
           endTime: "2025-05-20T14:00:00",
           purpose: "Совещание по проекту",
+          participantIds: []
         },
         {
           id: 7,
@@ -215,6 +225,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-22T13:00:00",
           endTime: "2025-05-22T14:00:00",
           purpose: "Рабочая встреча",
+          participantIds: []
         },
       ],
     },
@@ -233,6 +244,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-23T10:00:00",
           endTime: "2025-05-23T11:30:00",
           purpose: "Обсуждение бюджета",
+          participantIds: []
         },
       ],
     },
@@ -251,6 +263,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           startTime: "2025-05-21T11:00:00",
           endTime: "2025-05-21T12:00:00",
           purpose: "Совещание по проекту",
+          participantIds: []
         },
       ],
     },

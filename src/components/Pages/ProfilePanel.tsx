@@ -10,6 +10,9 @@ const ProfilePanel = () => {
   const employee = employees.find((e) => e.id === currentUser.id);
   if (!employee) return <p>Пользователь не найден</p>;
 
+  // Предполагаем, что поле "confirmed" - булево значение, есть ли подтверждение участия
+  const [confirmed, setConfirmed] = useState(employee.confirmed || false);
+
   const [formData, setFormData] = useState({
     fullName: employee.fullName,
     phone: employee.phone,
@@ -22,9 +25,19 @@ const ProfilePanel = () => {
 
   const handleSave = () => {
     setEmployees((prev) =>
-      prev.map((e) => (e.id === employee.id ? { ...e, ...formData } : e))
+      prev.map((e) =>
+        e.id === employee.id ? { ...e, ...formData, confirmed } : e
+      )
     );
     alert("Профиль обновлён");
+  };
+
+  const handleConfirm = () => {
+    setConfirmed(true);
+    // Обновим сразу и в глобальном состоянии
+    setEmployees((prev) =>
+      prev.map((e) => (e.id === employee.id ? { ...e, confirmed: true } : e))
+    );
   };
 
   return (
@@ -62,6 +75,21 @@ const ProfilePanel = () => {
           onChange={handleChange}
           className="w-full border px-3 py-2 rounded"
         />
+      </div>
+
+      {/* Новая секция для подтверждения участия */}
+      <div className="mb-6">
+        <p className="mb-2 font-medium">Подтвердить участие в конференции:</p>
+        {confirmed ? (
+          <p className="text-green-600 font-semibold">Вы подтвердили участие ✔️</p>
+        ) : (
+          <button
+            onClick={handleConfirm}
+            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+          >
+            Подтвердить участие
+          </button>
+        )}
       </div>
 
       <div className="mb-6 flex gap-4">

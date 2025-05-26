@@ -19,8 +19,10 @@ export default function MeetingRoomModal({
   const [purpose, setPurpose] = useState("");
   const { meetingRooms, setMeetingRooms } = useAppContext();
   const { currentUser } = useAppContext();
+  const [participants, setParticipants] = useState<number[]>([]);
+  const { employees } = useAppContext(); // список всех сотрудников
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     if (!selectedStart || !selectedEnd || !purpose) {
       alert("Пожалуйста, заполните все поля");
       return;
@@ -44,7 +46,7 @@ export default function MeetingRoomModal({
       alert("Дата начала и окончания должны быть в один и тот же день.");
       return;
     }
-    
+
     // Проверка: пересечения с другими бронированиями
     const hasOverlap = room.bookings.some((booking) => {
       const existingStart = new Date(booking.startTime);
@@ -67,6 +69,7 @@ export default function MeetingRoomModal({
       purpose,
       employeeId: currentUser!.id,
       meetingRoomId: room.id,
+      participantIds: participants,
     };
 
     const updatedRooms = meetingRooms.map((r) =>
@@ -74,6 +77,48 @@ export default function MeetingRoomModal({
     );
 
     setMeetingRooms(updatedRooms);
+
+    try {
+      const results = await Promise.all(
+        participants.map(async (participantId) => {
+          const participant = employees.find((e) => e.id === participantId);
+          if (!participant) return;
+
+          const emailPayload = {
+            to: participant.email,
+            subject: "Уведомление о встрече",
+            body:
+              `Здравствуйте, ${participant.fullName}!\n\n` +
+              `Вас пригласили на встречу в комнате "${room.name}".\n` +
+              `Время: ${selectedStart} – ${selectedEnd}\n` +
+              `Тема: ${purpose}\n\n` +
+              ``,
+          };
+
+          const response = await fetch("https://localhost:7232/api/mail/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(emailPayload),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              `Ошибка отправки письма: ${
+                errorData.error || response.statusText
+              }`
+            );
+          }
+
+          return response.json();
+        })
+      );
+
+      console.log("Все письма успешно отправлены", results);
+    } catch (error) {
+      console.error("Ошибка при отправке писем:", error);
+      alert("Не удалось отправить все уведомления");
+    }
 
     console.log("Бронирование успешно добавлено:", newBooking);
     onClose();
@@ -153,6 +198,27 @@ export default function MeetingRoomModal({
                 placeholder="Цель встречи"
                 className="border p-2 rounded"
               />
+
+              <select
+                multiple
+                value={participants.map(String)}
+                onChange={(e) => {
+                  const selected = Array.from(e.target.selectedOptions, (opt) =>
+                    Number(opt.value)
+                  );
+                  setParticipants(selected);
+                }}
+                className="border p-2 rounded"
+              >
+                {employees
+                  .filter((e) => e.id !== currentUser!.id)
+                  .map((emp) => (
+                    <option key={emp.id} value={emp.id}>
+                      {emp.fullName} ({emp.position})
+                    </option>
+                  ))}
+              </select>
+
               <button
                 onClick={handleBooking}
                 className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
